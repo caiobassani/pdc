@@ -1,12 +1,12 @@
 package pdcbackend.dao;
 
-import pdcbackend.dao.interfaces.VendaDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static pdcbackend.dao.DAOBaseJDBC.conn;
+import pdcbackend.dao.interfaces.VendaDAO;
 import pdcbackend.models.Cliente;
 import pdcbackend.models.Filial;
 import pdcbackend.models.Produto;

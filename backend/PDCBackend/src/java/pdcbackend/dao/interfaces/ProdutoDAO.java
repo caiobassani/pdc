@@ -7,10 +7,12 @@ public interface ProdutoDAO {
 
     public List<Produto> buscarProdutos(String nome);
 
-    public boolean cadastrarProduto(Produto cliente);
+    public Produto buscarProduto(Integer id);
+
+    public boolean cadastrarProduto(Produto produto);
 
     public boolean removerProduto(Integer idProduto);
 
-    public boolean alterarProduto(Produto cliente);
+    public boolean alterarProduto(Produto produto);
 
 }

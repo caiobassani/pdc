@@ -1,12 +1,12 @@
 package pdcbackend.dao;
 
-import pdcbackend.dao.interfaces.ProdutoDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static pdcbackend.dao.DAOBaseJDBC.conn;
+import pdcbackend.dao.interfaces.ProdutoDAO;
 import pdcbackend.models.Produto;
 
 public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
@@ -97,5 +97,31 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Produto buscarProduto(Integer idProduto) {
+        Produto produto = null;
+        PreparedStatement stmt;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("SELECT idProduto, nome, valor, qtdEstoque FROM Produto WHERE idProduto = ?");
+            stmt.setInt(1, idProduto);
+
+            stmt.executeQuery();
+
+            if (rs.next()) {
+                Integer id = rs.getInt("idProduto");
+                String nome = rs.getString("nome");
+                float valor = rs.getFloat("valor");
+                int qtdEstoque = rs.getInt("qtdEstoque");
+
+                produto = new Produto(id, nome, valor, qtdEstoque);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar produto: " + ex.getMessage());
+        }
+        return produto;
     }
 }
