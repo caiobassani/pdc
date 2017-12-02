@@ -49,7 +49,7 @@ public class ClienteResource {
     @Path("/removerCliente/{idCliente}")
     public ErrorMessage removerCliente(@PathParam("idCliente") Integer idCliente) {
         if (!clienteDAO.removerCliente(idCliente)) {
-            return new ErrorMessage("Erro ao remover cliente");
+            return new ErrorMessage("Erro ao remover cliente!");
         }
         return null;
     }
