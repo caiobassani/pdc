@@ -25,14 +25,20 @@ public class ProdutoResource {
     private final ProdutoDAO produtoDAO = new ProdutoDAOJDBC();
 
     @GET
-    @Path("/buscarProdutos")
-    public List<Produto> buscarClientes(String nome) {
+    @Path("/buscarProdutos/{nome}")
+    public List<Produto> buscarProdutos(@PathParam("nome") String nome) {
         return produtoDAO.buscarProdutos(nome);
+    }
+
+    @GET
+    @Path("/buscarProdutos")
+    public List<Produto> buscarProdutos() {
+        return produtoDAO.buscarProdutos();
     }
 
     @POST
     @Path("/cadastrarProduto")
-    public ErrorMessage cadastrarCliente(Produto produto) {
+    public ErrorMessage cadastrarProduto(Produto produto) {
         if (!produtoDAO.cadastrarProduto(produto)) {
             return new ErrorMessage("Erro ao cadastrar produto!");
         }
@@ -41,7 +47,7 @@ public class ProdutoResource {
 
     @DELETE
     @Path("/removerProduto/{idProduto}")
-    public ErrorMessage removerCliente(@PathParam("idProduto") Integer idProduto) {
+    public ErrorMessage removerProduto(@PathParam("idProduto") Integer idProduto) {
         if (!produtoDAO.removerProduto(idProduto)) {
             return new ErrorMessage("Erro ao remover produto!");
         }
@@ -50,7 +56,7 @@ public class ProdutoResource {
 
     @PUT
     @Path("/alterarProduto")
-    public ErrorMessage alterarCliente(Produto produto) {
+    public ErrorMessage alterarProduto(Produto produto) {
         if (!produtoDAO.alterarProduto(produto)) {
             return new ErrorMessage("Erro ao alterar produto!");
         }
