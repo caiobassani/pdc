@@ -5,6 +5,8 @@ import pdcbackend.models.Produto;
 
 public interface ProdutoDAO {
 
+    public List<Produto> buscarProdutos();
+
     public List<Produto> buscarProdutos(String nome);
 
     public Produto buscarProduto(Integer id);
