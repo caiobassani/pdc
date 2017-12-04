@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  backendPath: 'http://localhost:24282/PDCBackend',
+  backendPath: 'http://localhost:9597/PDCBackend',
 };
