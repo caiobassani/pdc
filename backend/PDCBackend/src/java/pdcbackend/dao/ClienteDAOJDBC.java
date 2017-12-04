@@ -15,7 +15,7 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
     }
 
     @Override
-    public List<Cliente> buscarClientes() {
+    public List<Cliente> buscarClientes() throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Cliente> clientes = new ArrayList();
@@ -37,12 +37,13 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar clientes: " + ex.getMessage());
+            throw ex;
         }
         return clientes;
     }
 
     @Override
-    public List<Cliente> buscarClientes(String nome) {
+    public List<Cliente> buscarClientes(String nome) throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Cliente> clientes = new ArrayList();
@@ -65,12 +66,13 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar clientes: " + ex.getMessage());
+            throw ex;
         }
         return clientes;
     }
 
     @Override
-    public Cliente buscarCliente(String nome) {
+    public Cliente buscarCliente(String nome) throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         Cliente cliente = null;
@@ -93,12 +95,13 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar cliente: " + ex.getMessage());
+            throw ex;
         }
         return cliente;
     }
-    
+
     @Override
-    public boolean cadastrarCliente(Cliente cliente) {
+    public void cadastrarCliente(Cliente cliente) throws SQLException {
         PreparedStatement stmt;
         try {
             stmt = conn.prepareStatement("INSERT INTO Cliente (nome,idFilial) VALUES (?,?) ");
@@ -110,13 +113,12 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao cadastrar cliente: " + ex.getMessage());
-            return false;
+            throw ex;
         }
-        return true;
     }
 
     @Override
-    public boolean removerCliente(Integer idCliente) {
+    public void removerCliente(Integer idCliente) throws SQLException {
         PreparedStatement stmt;
         try {
             stmt = conn.prepareStatement("DELETE FROM Cliente WHERE idCliente = ?");
@@ -127,15 +129,13 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao remover cliente: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
 
     }
 
     @Override
-    public boolean alterarCliente(Cliente cliente) {
+    public void alterarCliente(Cliente cliente) throws SQLException {
         PreparedStatement stmt;
         try {
             stmt = conn.prepareStatement("UPDATE Cliente SET nome = ? WHERE idCliente = ?");
@@ -147,9 +147,7 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao cadastrar cliente: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
     }
 }
