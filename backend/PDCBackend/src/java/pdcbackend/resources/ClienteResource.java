@@ -10,6 +10,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import pdcbackend.dao.ClienteDAOJDBC;
 import pdcbackend.dao.interfaces.ClienteDAO;
@@ -39,6 +40,10 @@ public class ClienteResource {
     @POST
     @Path("/cadastrarCliente")
     public ErrorMessage cadastrarCliente(Cliente cliente) {
+        Cliente clientePeloNome = clienteDAO.buscarCliente(cliente.getNome());
+        if (clientePeloNome != null) {
+            throw new WebApplicationException();
+        }
         if (!clienteDAO.cadastrarCliente(cliente)) {
             return new ErrorMessage("Erro ao cadastrar cliente!");
         }

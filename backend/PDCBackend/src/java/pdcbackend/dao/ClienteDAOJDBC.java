@@ -70,6 +70,34 @@ public class ClienteDAOJDBC extends DAOBaseJDBC implements ClienteDAO {
     }
 
     @Override
+    public Cliente buscarCliente(String nome) {
+        PreparedStatement stmt;
+        ResultSet rs;
+        Cliente cliente = null;
+
+        try {
+            stmt = conn.prepareStatement("SELECT c.idCliente,c.nome AS nomeCliente,f.idFilial,f.nome AS nomeFilial FROM Cliente c INNER JOIN FILIAL f ON c.idFilial = f.idFilial WHERE c.nome = ?");
+            stmt.setString(1, nome);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Integer idCliente = rs.getInt("idCliente");
+                String nomeCliente = rs.getString("nomeCliente");
+                Integer idFilial = rs.getInt("idFilial");
+                String nomeFilial = rs.getString("nomeFilial");
+
+                Filial filial = new Filial(idFilial, nomeFilial);
+
+                cliente = new Cliente(idCliente, nomeCliente, filial);
+            }
+            stmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar cliente: " + ex.getMessage());
+        }
+        return cliente;
+    }
+    
+    @Override
     public boolean cadastrarCliente(Cliente cliente) {
         PreparedStatement stmt;
         try {

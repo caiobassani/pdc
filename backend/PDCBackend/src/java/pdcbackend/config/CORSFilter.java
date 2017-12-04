@@ -1,4 +1,4 @@
-package config;
+package pdcbackend.config;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;

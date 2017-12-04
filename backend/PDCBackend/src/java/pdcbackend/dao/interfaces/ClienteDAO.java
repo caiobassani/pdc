@@ -8,6 +8,8 @@ public interface ClienteDAO {
     public List<Cliente> buscarClientes();
 
     public List<Cliente> buscarClientes(String nome);
+    
+    public Cliente buscarCliente(String nome);
 
     public boolean cadastrarCliente(Cliente cliente);
 
