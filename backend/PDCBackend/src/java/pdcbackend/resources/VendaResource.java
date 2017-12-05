@@ -1,5 +1,6 @@
 package pdcbackend.resources;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -12,7 +13,7 @@ import pdcbackend.dao.ProdutoDAOJDBC;
 import pdcbackend.dao.VendaDAOJDBC;
 import pdcbackend.dao.interfaces.ProdutoDAO;
 import pdcbackend.dao.interfaces.VendaDAO;
-import pdcbackend.models.ErrorMessage;
+import pdcbackend.errors.ErrorMessages;
 import pdcbackend.models.Produto;
 import pdcbackend.models.Venda;
 
@@ -28,29 +29,35 @@ public class VendaResource {
     @GET
     @Path("/buscarVendas")
     public List<Venda> buscarVendas() {
-        return vendaDAO.buscarTodas();
+        try {
+            return vendaDAO.buscarTodas();
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.VENDA_BUSCAR_TODAS);
+        }
     }
 
     @POST
     @Path("/efetuarVenda")
-    public ErrorMessage efetuarVenda(Venda venda) {
+    public void efetuarVenda(Venda venda) {
         Produto produto;
         int novaQuantidade;
+        try {
+            produto = produtoDAO.buscarProduto(venda.getProduto().getIdProduto());
 
-        produto = produtoDAO.buscarProduto(venda.getProduto().getIdProduto());
+            if (produto.getQtdEstoque() > venda.getQtd()) {
+                novaQuantidade = produto.getQtdEstoque() - venda.getQtd();
 
-        if (produto.getQtdEstoque() > venda.getQtd()) {
-            novaQuantidade = produto.getQtdEstoque() - venda.getQtd();
+                produto.setQtdEstoque(novaQuantidade);
 
-            produto.setQtdEstoque(novaQuantidade);
+                produtoDAO.alterarProduto(produto);
 
-            produtoDAO.alterarProduto(produto);
+                vendaDAO.efetuarVenda(venda);
 
-            vendaDAO.efetuarVenda(venda);
-
-        } else {
-            return new ErrorMessage("Erro ao efetuar venda! Quantidade indisponível!");
+            } else {
+                throw ErrorMessages.getException(ErrorMessages.PRODUTO_SEM_ESTOQUE);
+            }
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.VENDA_EFETUAR);
         }
-        return null;
     }
 }

@@ -15,7 +15,7 @@ import pdcbackend.models.Venda;
 public class VendaDAOJDBC extends DAOBaseJDBC implements VendaDAO {
 
     @Override
-    public List<Venda> buscarTodas() {
+    public List<Venda> buscarTodas() throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Venda> vendas = new ArrayList();
@@ -55,12 +55,13 @@ public class VendaDAOJDBC extends DAOBaseJDBC implements VendaDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar vendas: " + ex.getMessage());
+            throw ex;
         }
         return vendas;
     }
 
     @Override
-    public boolean efetuarVenda(Venda venda) {
+    public void efetuarVenda(Venda venda) throws SQLException {
         PreparedStatement stmt;
 
         try {
@@ -78,10 +79,8 @@ public class VendaDAOJDBC extends DAOBaseJDBC implements VendaDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao efetuar venda: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
     }
 
 }

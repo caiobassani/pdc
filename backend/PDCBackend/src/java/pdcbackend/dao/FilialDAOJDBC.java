@@ -1,17 +1,17 @@
 package pdcbackend.dao;
 
-import pdcbackend.dao.interfaces.FilialDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import pdcbackend.dao.interfaces.FilialDAO;
 import pdcbackend.models.Filial;
 
 public class FilialDAOJDBC extends DAOBaseJDBC implements FilialDAO {
 
     @Override
-    public List<Filial> buscarFiliais() {
+    public List<Filial> buscarFiliais() throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Filial> filiais = new ArrayList();
@@ -28,9 +28,9 @@ public class FilialDAOJDBC extends DAOBaseJDBC implements FilialDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar filiais: " + ex.getMessage());
+            throw ex;
         }
         return filiais;
-
     }
 
 }
