@@ -1,5 +1,6 @@
 package pdcbackend.resources;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
@@ -13,7 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import pdcbackend.dao.ProdutoDAOJDBC;
 import pdcbackend.dao.interfaces.ProdutoDAO;
-import pdcbackend.models.ErrorMessage;
+import pdcbackend.errors.ErrorMessages;
 import pdcbackend.models.Produto;
 
 @Named
@@ -27,39 +28,63 @@ public class ProdutoResource {
     @GET
     @Path("/buscarProdutos/{nome}")
     public List<Produto> buscarProdutos(@PathParam("nome") String nome) {
-        return produtoDAO.buscarProdutos(nome);
+        try {
+            return produtoDAO.buscarProdutos(nome);
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_BUSCAR_VARIOS);
+        }
     }
 
     @GET
     @Path("/buscarProdutos")
     public List<Produto> buscarProdutos() {
-        return produtoDAO.buscarProdutos();
+        try {
+            return produtoDAO.buscarProdutos();
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_BUSCAR_VARIOS);
+        }
     }
 
     @POST
     @Path("/cadastrarProduto")
-    public ErrorMessage cadastrarProduto(Produto produto) {
-        if (!produtoDAO.cadastrarProduto(produto)) {
-            return new ErrorMessage("Erro ao cadastrar produto!");
+    public void cadastrarProduto(Produto produto) {
+        try {
+            Produto produtoPeloNome = produtoDAO.buscarProduto(produto.getNome());
+
+            if (produtoPeloNome != null) {
+                throw ErrorMessages.getException(ErrorMessages.PRODUTO_CADASTRAR_MESMO_NOME);
+            }
+
+            produtoDAO.cadastrarProduto(produto);
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_CADASTRAR);
         }
-        return null;
     }
 
     @DELETE
     @Path("/removerProduto/{idProduto}")
-    public ErrorMessage removerProduto(@PathParam("idProduto") Integer idProduto) {
-        if (!produtoDAO.removerProduto(idProduto)) {
-            return new ErrorMessage("Erro ao remover produto!");
+    public void removerProduto(@PathParam("idProduto") Integer idProduto) {
+        try {
+            produtoDAO.removerProduto(idProduto);
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_REMOVER);
         }
-        return null;
     }
 
     @PUT
     @Path("/alterarProduto")
-    public ErrorMessage alterarProduto(Produto produto) {
-        if (!produtoDAO.alterarProduto(produto)) {
-            return new ErrorMessage("Erro ao alterar produto!");
+    public void alterarProduto(Produto produto) {
+        try {
+            Produto produtoPeloNome = produtoDAO.buscarProduto(produto.getNome());
+
+            if (produtoPeloNome != null) {
+                throw ErrorMessages.getException(ErrorMessages.PRODUTO_ALTERAR_MESMO_NOME);
+            }
+
+            produtoDAO.alterarProduto(produto);
+        } catch (SQLException ex) {
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_ALTERAR_MESMO_NOME);
+
         }
-        return null;
     }
 }

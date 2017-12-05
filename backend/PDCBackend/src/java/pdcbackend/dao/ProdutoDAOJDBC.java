@@ -12,7 +12,7 @@ import pdcbackend.models.Produto;
 public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
 
     @Override
-    public List<Produto> buscarProdutos() {
+    public List<Produto> buscarProdutos() throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Produto> produtos = new ArrayList();
@@ -32,12 +32,13 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar produtos: " + ex.getMessage());
+            throw ex;
         }
         return produtos;
     }
 
     @Override
-    public List<Produto> buscarProdutos(String nome) {
+    public List<Produto> buscarProdutos(String nome) throws SQLException {
         PreparedStatement stmt;
         ResultSet rs;
         List<Produto> produtos = new ArrayList();
@@ -58,12 +59,13 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar produtos: " + ex.getMessage());
+            throw ex;
         }
         return produtos;
     }
 
     @Override
-    public Produto buscarProduto(Integer idProduto) {
+    public Produto buscarProduto(Integer idProduto) throws SQLException {
         Produto produto = null;
         PreparedStatement stmt;
         ResultSet rs = null;
@@ -84,12 +86,40 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             }
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar produto: " + ex.getMessage());
+            throw ex;
         }
         return produto;
     }
 
     @Override
-    public boolean cadastrarProduto(Produto produto) {
+    public Produto buscarProduto(String nome) throws SQLException {
+        Produto produto = null;
+        PreparedStatement stmt;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("SELECT idProduto, nome, valor, qtdEstoque FROM Produto WHERE nome = ?");
+            stmt.setString(1, nome);
+
+            stmt.executeQuery();
+
+            if (rs.next()) {
+                Integer id = rs.getInt("idProduto");
+                String nomeProduto = rs.getString("nome");
+                float valor = rs.getFloat("valor");
+                int qtdEstoque = rs.getInt("qtdEstoque");
+
+                produto = new Produto(id, nomeProduto, valor, qtdEstoque);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar produto: " + ex.getMessage());
+            throw ex;
+        }
+        return produto;
+    }
+
+    @Override
+    public void cadastrarProduto(Produto produto) throws SQLException {
         PreparedStatement stmt;
 
         try {
@@ -104,14 +134,12 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao cadastrar produto: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
     }
 
     @Override
-    public boolean removerProduto(Integer idProduto) {
+    public void removerProduto(Integer idProduto) throws SQLException {
         PreparedStatement stmt;
 
         try {
@@ -124,14 +152,12 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao remover produto: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
     }
 
     @Override
-    public boolean alterarProduto(Produto produto) {
+    public void alterarProduto(Produto produto) throws SQLException {
         PreparedStatement stmt;
         try {
             stmt = conn.prepareStatement("UPDATE Produto SET nome = ?, valor = ?, qtdEstoque = ? WHERE idProduto = ?");
@@ -144,10 +170,7 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Erro ao alterar produto: " + ex.getMessage());
-
-            return false;
+            throw ex;
         }
-        return true;
     }
-
 }

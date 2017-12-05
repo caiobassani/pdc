@@ -50,6 +50,7 @@ public class ClienteResource {
     public void cadastrarCliente(Cliente cliente) {
         try {
             Cliente clientePeloNome = clienteDAO.buscarCliente(cliente.getNome());
+
             if (clientePeloNome != null) {
                 throw ErrorMessages.getException(ErrorMessages.CLIENTE_CADASTRAR_MESMO_NOME);
             }
@@ -78,6 +79,7 @@ public class ClienteResource {
                 throw ErrorMessages.getException(ErrorMessages.CLIENTE_ALTERAR_MESMO_NOME);
             }
             clienteDAO.alterarCliente(cliente);
+
         } catch (SQLException ex) {
             throw ErrorMessages.getException(ErrorMessages.CLIENTE_ALTERAR);
         }

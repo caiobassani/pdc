@@ -1,20 +1,23 @@
 package pdcbackend.dao.interfaces;
 
+import java.sql.SQLException;
 import java.util.List;
 import pdcbackend.models.Produto;
 
 public interface ProdutoDAO {
 
-    public List<Produto> buscarProdutos();
+    public List<Produto> buscarProdutos() throws SQLException;
 
-    public List<Produto> buscarProdutos(String nome);
+    public List<Produto> buscarProdutos(String nome) throws SQLException;
 
-    public Produto buscarProduto(Integer id);
+    public Produto buscarProduto(Integer id) throws SQLException;
 
-    public boolean cadastrarProduto(Produto produto);
+    public Produto buscarProduto(String nome) throws SQLException;
 
-    public boolean removerProduto(Integer idProduto);
+    public void cadastrarProduto(Produto produto) throws SQLException;
 
-    public boolean alterarProduto(Produto produto);
+    public void removerProduto(Integer idProduto) throws SQLException;
+
+    public void alterarProduto(Produto produto) throws SQLException;
 
 }
