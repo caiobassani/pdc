@@ -1,6 +1,12 @@
-export function getTableSettings(columns: any) {
+export function getTableSettings(columns: any, actions: boolean = true) {
   return {
     mode: 'inline',
+    actions: {
+      columnTitle: 'Ações',
+      add: actions,
+      edit: actions,
+      delete: actions,
+    },
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -18,5 +24,6 @@ export function getTableSettings(columns: any) {
       confirmDelete: true,
     },
     columns: columns,
+    noDataMessage: 'Nenhum dado encontrado.',
   };
 }

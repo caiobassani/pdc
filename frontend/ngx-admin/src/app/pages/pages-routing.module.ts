@@ -14,6 +14,9 @@ const routes: Routes = [{
     path: 'produto',
     loadChildren: './produto/produto.module#ProdutoModule',
   }, {
+    path: 'venda',
+    loadChildren: './venda/venda.module#VendaModule',
+  }, {
     path: 'dashboard',
     component: DashboardComponent,
   }, {

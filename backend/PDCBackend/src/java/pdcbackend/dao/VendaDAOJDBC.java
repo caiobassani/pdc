@@ -21,7 +21,7 @@ public class VendaDAOJDBC extends DAOBaseJDBC implements VendaDAO {
         List<Venda> vendas = new ArrayList();
 
         try {
-            stmt = conn.prepareStatement("SELECT v.idVenda, v.idCliente, v.idProduto, v.idFilial, v.qtd AS qtdVenda, v.valorUnitarioVenda,"
+            stmt = conn.prepareStatement("SELECT v.idVenda, v.idCliente, v.idProduto, v.idFilial, v.qtd AS qtdVenda, v.valorUnitario AS valorUnitarioVenda,"
                     + "c.nome AS nomeCliente,"
                     + "p.nome AS nomeProduto, p.valor AS valorUnitarioEstoque, p.qtdEstoque,"
                     + "f.nome AS nomeFilial "

@@ -1,0 +1,46 @@
+<nb-card>
+  <nb-card-header>
+    Efetuar Venda
+  </nb-card-header>
+
+  <nb-card-body>
+    <form>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label for="cliente">Cliente</label>
+          <select class="form-control" id="cliente" *ngIf="clientes && clientes.length; else noClientesMessage">
+            <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{ cliente.nome }}</option>
+          </select>
+          <ng-template #noClientesMessage>
+            <div class="alert alert-info" role="alert">
+              <strong>Nenhum cliente cadastrado.</strong>
+            </div>
+          </ng-template>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="produto">Produto</label>
+          <select class="form-control" id="produto" *ngIf="produtos && produtos.length; else noProdutosMessage">
+            <option *ngFor="let produto of produtos" [value]="produto.idProduto">{{ produto.nome }}</option>
+          </select>
+          <ng-template #noProdutosMessage>
+            <div class="alert alert-info" role="alert">
+              <strong>Nenhum produto cadastrado.</strong>
+            </div>
+          </ng-template>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="filial">Filial</label>
+          <select class="form-control" id="filial" *ngIf="filiais && filiais.length; else noFiliaisMessage">
+            <option *ngFor="let filial of filials" [value]="filial.idFilial">{{ filial.nome }}</option>
+          </select>
+          <ng-template #noFiliaisMessage>
+            <div class="alert alert-info" role="alert">
+              <strong>Nenhuma filial cadastrada.</strong>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-block btn-primary" [disabled]="formDisabled">Efetuar</button>
+    </form>
+  </nb-card-body>
+</nb-card>

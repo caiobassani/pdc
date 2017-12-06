@@ -11,6 +11,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'ion-ios-cart-outline',
     link: '/pages/produto',
   },
+  {
+    title: 'Venda',
+    icon: 'ion-card',
+    link: '/pages/venda',
+  },
   // TODO a remover
   {
     title: 'Dashboard',

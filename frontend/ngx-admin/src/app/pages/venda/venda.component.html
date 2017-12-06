@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-header>
+    <span class="titulo">Vendas</span>
+    <div class="efetuar-venda-button">
+      <button type="button" class="btn btn-sm btn-primary btn-with-icon" (click)="efetuarNovaVenda()">
+        <i class="nb-plus"></i>
+        <span>Efetuar Nova Venda</span>
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table [settings]="tableSettings" [source]="source">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
