@@ -77,14 +77,13 @@ public class ProdutoResource {
         try {
             Produto produtoPeloNome = produtoDAO.buscarProduto(produto.getNome());
 
-            if (produtoPeloNome != null) {
+            if (produtoPeloNome != null && !produtoPeloNome.getIdProduto().equals(produto.getIdProduto())) {
                 throw ErrorMessages.getException(ErrorMessages.PRODUTO_ALTERAR_MESMO_NOME);
             }
 
             produtoDAO.alterarProduto(produto);
         } catch (SQLException ex) {
-            throw ErrorMessages.getException(ErrorMessages.PRODUTO_ALTERAR_MESMO_NOME);
-
+            throw ErrorMessages.getException(ErrorMessages.PRODUTO_ALTERAR);
         }
     }
 }

@@ -18,6 +18,7 @@ public class ErrorMessages {
     public static String PRODUTO_CADASTRAR_MESMO_NOME = "Já existe outro produto com este nome.";
     public static String PRODUTO_REMOVER = "Erro ao remover produto.";
     public static String PRODUTO_ALTERAR_MESMO_NOME = "Já existe outro produto com este nome.";
+    public static String PRODUTO_ALTERAR = "Erro ao alterar produto.";
     public static String PRODUTO_SEM_ESTOQUE = "Quantidade indisponível.";
     public static String VENDA_BUSCAR_TODAS = "Erro ao buscar vendas.";
     public static String VENDA_EFETUAR = "Erro ao efetuar a venda.";

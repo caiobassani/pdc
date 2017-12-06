@@ -6,7 +6,7 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CoreModule } from './@core/core.module';
 
@@ -19,6 +19,9 @@ import { ClienteService } from './services/cliente.service';
 import { FilialService } from './services/filial.service';
 import { ProdutoService } from './services/produto.service';
 import { VendaService } from './services/venda.service';
+import { MessageService } from './pages/messages/message.service';
+
+import { CustomErrorHandlerService } from './error-handler/custom-error-handler.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +42,8 @@ import { VendaService } from './services/venda.service';
     FilialService,
     ProdutoService,
     VendaService,
+    MessageService,
+    { provide: ErrorHandler, useClass: CustomErrorHandlerService },
   ],
 })
 export class AppModule {

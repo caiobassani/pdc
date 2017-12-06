@@ -6,6 +6,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'nb-person',
     link: '/pages/cliente',
   },
+  {
+    title: 'Produto',
+    icon: 'ion-ios-cart-outline',
+    link: '/pages/produto',
+  },
   // TODO a remover
   {
     title: 'Dashboard',

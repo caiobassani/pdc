@@ -11,6 +11,9 @@ const routes: Routes = [{
     path: 'cliente',
     loadChildren: './cliente/cliente.module#ClienteModule',
   }, {
+    path: 'produto',
+    loadChildren: './produto/produto.module#ProdutoModule',
+  }, {
     path: 'dashboard',
     component: DashboardComponent,
   }, {
