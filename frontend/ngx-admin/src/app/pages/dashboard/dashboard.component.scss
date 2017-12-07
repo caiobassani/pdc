@@ -20,3 +20,21 @@
     }
   }
 }
+
+.dashboard-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-button-icon {
+  font-size: 2.5rem;
+  width: 2.5rem;
+  margin: 0 0.5rem 0 0;
+  text-align: center;
+}
+
+.dashboard-button-text {
+  font-size: 1.5rem;
+  margin: 0 auto;
+}

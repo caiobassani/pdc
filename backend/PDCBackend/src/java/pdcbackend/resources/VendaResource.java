@@ -44,7 +44,7 @@ public class VendaResource {
         try {
             produto = produtoDAO.buscarProduto(venda.getProduto().getIdProduto());
 
-            if (produto.getQtdEstoque() > venda.getQtd()) {
+            if (produto.getQtdEstoque() >= venda.getQtd()) {
                 novaQuantidade = produto.getQtdEstoque() - venda.getQtd();
 
                 produto.setQtdEstoque(novaQuantidade);

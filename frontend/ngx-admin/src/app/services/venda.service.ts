@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../../environments/environment';
 import { Venda } from '../models/venda.model';
-import { ErrorMessage } from '../models/error-message.model';
 
 @Injectable()
 export class VendaService {
@@ -18,8 +17,8 @@ export class VendaService {
             .map((res: Response) => res.json() || []);
     }
 
-    efetuarVenda(venda: Venda): Observable<ErrorMessage> {
+    efetuarVenda(venda: Venda): Observable<boolean> {
         return this.http.post(`${environment.backendPath}/venda/efetuarVenda`, venda)
-            .map((res: Response) => res.json() || null);
+            .map((res: Response) => res.ok);
     }
 }

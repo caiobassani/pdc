@@ -66,6 +66,9 @@ public class ClienteResource {
         try {
             clienteDAO.removerCliente(idCliente);
         } catch (SQLException ex) {
+            if (ex.getErrorCode() == 1451) {
+                throw ErrorMessages.getException(ErrorMessages.CLIENTE_CHAVE_ESTRANGEIRA);
+            }
             throw ErrorMessages.getException(ErrorMessages.CLIENTE_REMOVER);
         }
     }

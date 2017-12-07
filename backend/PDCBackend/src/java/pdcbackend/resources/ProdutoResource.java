@@ -67,6 +67,9 @@ public class ProdutoResource {
         try {
             produtoDAO.removerProduto(idProduto);
         } catch (SQLException ex) {
+            if (ex.getErrorCode() == 1451) {
+                throw ErrorMessages.getException(ErrorMessages.PRODUTO_CHAVE_ESTRANGEIRA);
+            }
             throw ErrorMessages.getException(ErrorMessages.PRODUTO_REMOVER);
         }
     }

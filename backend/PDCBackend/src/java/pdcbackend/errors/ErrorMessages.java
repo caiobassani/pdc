@@ -11,12 +11,14 @@ public class ErrorMessages {
     public static String CLIENTE_CADASTRAR_MESMO_NOME = "Já existe outro cliente com este nome.";
     public static String CLIENTE_CADASTRAR = "Erro ao cadastrar cliente.";
     public static String CLIENTE_REMOVER = "Erro ao remover cliente.";
+    public static String CLIENTE_CHAVE_ESTRANGEIRA = "Não é possível remover o cliente pois existem vendas associadas a ele.";
     public static String CLIENTE_ALTERAR = "Erro ao alterar cliente.";
     public static String CLIENTE_ALTERAR_MESMO_NOME = "Já existe outro cliente com este nome.";
     public static String PRODUTO_BUSCAR_VARIOS = "Erro ao buscar produtos.";
     public static String PRODUTO_CADASTRAR = "Erro ao cadastrar produto.";
     public static String PRODUTO_CADASTRAR_MESMO_NOME = "Já existe outro produto com este nome.";
     public static String PRODUTO_REMOVER = "Erro ao remover produto.";
+    public static String PRODUTO_CHAVE_ESTRANGEIRA = "Não é possível remover o produto pois existem vendas associadas a ele.";
     public static String PRODUTO_ALTERAR_MESMO_NOME = "Já existe outro produto com este nome.";
     public static String PRODUTO_ALTERAR = "Erro ao alterar produto.";
     public static String PRODUTO_SEM_ESTOQUE = "Quantidade indisponível.";

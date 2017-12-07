@@ -21,7 +21,8 @@ import { ProdutoService } from './services/produto.service';
 import { VendaService } from './services/venda.service';
 import { MessageService } from './pages/messages/message.service';
 
-import { CustomErrorHandlerService } from './error-handler/custom-error-handler.service';
+import { CustomErrorHandlerService } from './@core/error-handler/custom-error-handler.service';
+import { BackendStatusService } from './@core/backend-status/backend-status.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { CustomErrorHandlerService } from './error-handler/custom-error-handler.
     ProdutoService,
     VendaService,
     MessageService,
+    BackendStatusService,
     { provide: ErrorHandler, useClass: CustomErrorHandlerService },
   ],
 })

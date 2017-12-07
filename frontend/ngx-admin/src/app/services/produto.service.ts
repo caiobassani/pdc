@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { environment } from '../../environments/environment';
 import { Produto } from '../models/produto.model';
-import { ErrorMessage } from '../models/error-message.model';
 
 @Injectable()
 export class ProdutoService {
@@ -23,18 +22,18 @@ export class ProdutoService {
             .map((res: Response) => res.json() || []);
     }
 
-    cadastrarProduto(produto: Produto): Observable<ErrorMessage> {
+    cadastrarProduto(produto: Produto): Observable<boolean> {
         return this.http.post(`${environment.backendPath}/produto/cadastrarProduto`, produto)
-            .map((res: Response) => res.json() || null);
+            .map((res: Response) => res.ok);
     }
 
-    removerProduto(idProduto: number): Observable<ErrorMessage> {
+    removerProduto(idProduto: number): Observable<boolean> {
         return this.http.delete(`${environment.backendPath}/produto/removerProduto/${idProduto}`)
-            .map((res: Response) => res.json() || null);
+            .map((res: Response) => res.ok);
     }
 
-    alterarProduto(produto: Produto): Observable<ErrorMessage> {
+    alterarProduto(produto: Produto): Observable<boolean> {
         return this.http.put(`${environment.backendPath}/produto/alterarProduto/`, produto)
-            .map((res: Response) => res.json() || null);
+            .map((res: Response) => res.ok);
     }
 }
