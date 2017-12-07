@@ -19,7 +19,7 @@ export class VendaService {
     }
 
     efetuarVenda(venda: Venda): Observable<ErrorMessage> {
-        return this.http.post(`${environment.backendPath}/venda/efetuarVenda/`, venda)
+        return this.http.post(`${environment.backendPath}/venda/efetuarVenda`, venda)
             .map((res: Response) => res.json() || null);
     }
 }

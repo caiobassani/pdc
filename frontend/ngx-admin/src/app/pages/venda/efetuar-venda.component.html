@@ -4,43 +4,63 @@
   </nb-card-header>
 
   <nb-card-body>
-    <form>
+    <form [formGroup]="vendaForm">
       <div class="row">
         <div class="form-group col-sm-4">
           <label for="cliente">Cliente</label>
-          <select class="form-control" id="cliente" *ngIf="clientes && clientes.length; else noClientesMessage">
-            <option *ngFor="let cliente of clientes" [value]="cliente.idCliente">{{ cliente.nome }}</option>
+          <select formControlName="cliente" class="form-control" id="cliente" *ngIf="clientes && clientes.length; else noClientesMessage">
+            <option *ngFor="let item of clientesItem" [value]="item.value">{{ item.label }}</option>
           </select>
           <ng-template #noClientesMessage>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-warning" role="alert">
               <strong>Nenhum cliente cadastrado.</strong>
             </div>
           </ng-template>
         </div>
         <div class="form-group col-sm-4">
           <label for="produto">Produto</label>
-          <select class="form-control" id="produto" *ngIf="produtos && produtos.length; else noProdutosMessage">
-            <option *ngFor="let produto of produtos" [value]="produto.idProduto">{{ produto.nome }}</option>
+          <select formControlName="produto" class="form-control" id="produto" *ngIf="produtosItem && produtosItem.length; else noProdutosMessage">
+            <option *ngFor="let item of produtosItem" [value]="item.value">{{ item.label }}</option>
           </select>
           <ng-template #noProdutosMessage>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-warning" role="alert">
               <strong>Nenhum produto cadastrado.</strong>
             </div>
           </ng-template>
         </div>
         <div class="form-group col-sm-4">
           <label for="filial">Filial</label>
-          <select class="form-control" id="filial" *ngIf="filiais && filiais.length; else noFiliaisMessage">
-            <option *ngFor="let filial of filials" [value]="filial.idFilial">{{ filial.nome }}</option>
+          <select formControlName="filial" class="form-control" id="filial" *ngIf="filiaisItem && filiaisItem.length; else noFiliaisMessage">
+            <option *ngFor="let item of filiaisItem" [value]="item.value">{{ item.label }}</option>
           </select>
           <ng-template #noFiliaisMessage>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-warning" role="alert">
               <strong>Nenhuma filial cadastrada.</strong>
             </div>
           </ng-template>
         </div>
       </div>
-      <button type="submit" class="btn btn-block btn-primary" [disabled]="formDisabled">Efetuar</button>
+      <div class="row">
+        <div class="form-group col-sm-2">
+          <label for="qtd">Quantidade</label>
+          <input type="number" min="1" class="form-control" id="qtd" formControlName="qtd" />
+        </div>
+        <div class="form-group col-sm-5">
+          <label for="valorUnitario">Valor Unitário</label>
+          <div class="input-group mail-btn-group">
+            <span class="input-group-addon success">$</span>
+            <input type="text" class="form-control" id="valorUnitario" readonly formControlName="valorUnitario" />
+          </div>
+        </div>
+        <div class="form-group col-sm-5">
+          <label for="valorTotal">Valor Total</label>
+          <div class="input-group mail-btn-group">
+            <span class="input-group-addon success">$</span>
+            <input type="text" class="form-control" id="valorTotal" readonly formControlName="valorTotal" />
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-block btn-primary" [disabled]="!vendaForm.valid" (click)="efetuarVenda(vendaForm.value, vendaForm.valid)">Efetuar</button>
     </form>
   </nb-card-body>
 </nb-card>

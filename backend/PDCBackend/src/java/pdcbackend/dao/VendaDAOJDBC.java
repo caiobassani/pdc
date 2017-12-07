@@ -65,14 +65,13 @@ public class VendaDAOJDBC extends DAOBaseJDBC implements VendaDAO {
         PreparedStatement stmt;
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO Venda (idVenda, idCliente, idProduto, idFilial, qtd, valorUnitario) VALUES (?, ?, ?, ?, ?, ?)");
+            stmt = conn.prepareStatement("INSERT INTO Venda (idVenda, idCliente, idProduto, idFilial, qtd, valorUnitario) VALUES (NULL, ?, ?, ?, ?, ?)");
 
-            stmt.setInt(1, venda.getIdVenda());
-            stmt.setInt(2, venda.getCliente().getIdCliente());
-            stmt.setInt(3, venda.getProduto().getIdProduto());
-            stmt.setInt(4, venda.getFilial().getIdFilial());
-            stmt.setInt(5, venda.getQtd());
-            stmt.setFloat(6, venda.getValorUnitario());
+            stmt.setInt(1, venda.getCliente().getIdCliente());
+            stmt.setInt(2, venda.getProduto().getIdProduto());
+            stmt.setInt(3, venda.getFilial().getIdFilial());
+            stmt.setInt(4, venda.getQtd());
+            stmt.setFloat(5, venda.getValorUnitario());
 
             stmt.executeUpdate();
 

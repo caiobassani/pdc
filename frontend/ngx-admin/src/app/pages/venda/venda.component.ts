@@ -63,7 +63,7 @@ export class VendaComponent implements OnInit {
         type: 'number',
       },
       valorTotal: {
-        title: 'Valor Unitário',
+        title: 'Valor Total',
         type: 'number',
         valuePrepareFunction: valor => CurrencyPipe.prototype.transform(valor, 'BRL', true, '1.2-2'),
       },

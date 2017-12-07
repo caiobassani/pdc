@@ -74,7 +74,7 @@ public class ProdutoDAOJDBC extends DAOBaseJDBC implements ProdutoDAO {
             stmt = conn.prepareStatement("SELECT idProduto, nome, valor, qtdEstoque FROM Produto WHERE idProduto = ?");
             stmt.setInt(1, idProduto);
 
-            stmt.executeQuery();
+            rs = stmt.executeQuery();
 
             if (rs.next()) {
                 Integer id = rs.getInt("idProduto");
